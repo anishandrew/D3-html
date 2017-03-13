@@ -1,0 +1,30 @@
+name IT Company
+children
+name Development
+children
+name SeniorEngg
+children
+name SeniorEnggCluster
+size 4034
+name SeniorEnggStructure
+size 4012
+name SeniorEnggCluster
+size 4714
+name SeniorEnggEdge
+size 443
+name Engg
+children
+name EnggCentrality
+size 4574
+name EnggDistance
+size 7634
+name EnggMinCut
+size 9834
+name EnggPaths
+size 1243
+name EnggTree
+size 2098
+name AssociateEngg
+children
+name AssociateEnggBanker
+size 7777

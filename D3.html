@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>D3 Graphics</title>
+	<link rel="stylesheet" type="text/stylesheet" href="stylesheet/base.css" />
+	<link rel="stylesheet" type="text/stylesheet" href="stylesheet/bullet.css" />		
+</head>
+<body>
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+	<div class="container">
+		<h2>D3 Graphics</h2>
+		<p>D3 allows you to bind arbitrary data to a Document Object Model (DOM), and then apply data-driven transformations to the document. For example, you can use D3 to generate an HTML table from an array of numbers. Or, use the same data to create an interactive SVG bar chart with smooth transitions and interaction.</p>
+		<p>D3 is not a monolithic framework that seeks to provide every conceivable feature. Instead, D3 solves the crux of the problem: efficient manipulation of documents based on data. This avoids proprietary representation and affords extraordinary flexibility, exposing the full capabilities of web standards such as HTML, SVG, and CSS. With minimal overhead, D3 is extremely fast, supporting large datasets and dynamic behaviors for interaction and animation.</p>
+		<p>Here, we'll condider four examples where we would consider a single data set, a relation data set in json form, a percentage wise data set and lastly a framework using friction. So, lets start coding.</p>
+		<div>
+			<p>1. A diagramatical representation of a single data set(Hover over the graph).</p>
+			<div id="simple"></div>	
+		</div>
+		<div>
+			<p>2. A diagramatical representation of force framework(catch the node and stretch it)
+				This force layout is with single form.Click the link <a href="graph.html">Force Layout Json </a> for the modified version of force layout with json data format.
+				*<em>Make sue to disable the cross origin policy of chrome.</em>
+			</p>
+			<div id="relation"></div>	
+		</div>
+		<div>
+			<p>3. A diagramatical representation in the form of pie chart.</p>
+			<div id="pie"></div>	
+		</div>
+	</div>
+	<!-- <script src="script/d3.min.js"></script> -->
+	<script src="script/simple.js"></script>
+	<script src="script/relation.js"></script>
+	<script src="script/pie.js"></script>
+</body>	
+</html>

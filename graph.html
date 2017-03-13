@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.node circle {
+  cursor: pointer;
+  stroke: #3182bd;
+  stroke-width: 2px;
+}
+
+.node text {
+  font: 10px sans-serif;
+  pointer-events: none;
+  text-anchor: top;
+}
+
+line.link {
+  fill: none;
+  stroke: #9ecae1;
+  stroke-width: 2px;
+}
+
+</style>
+<body>
+  <p>Click the nodes and stretch the nodes. </p>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+var width = 420,
+    height = 500,
+    root;
+
+var force = d3.layout.force()
+    .linkDistance(80)
+    .charge(-120)
+    .gravity(.05)
+    .size([width, height])
+    .on("tick", tick);
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+var link = svg.selectAll(".link"),
+    node = svg.selectAll(".node");
+
+d3.csv("data.json",function(error, data) {
+  root = data;
+  update();
+});
+
+function update() {
+  var nodes = flatten(root),
+      links = d3.layout.tree().links(nodes);
+
+  force
+      .nodes(nodes)
+      .links(links)
+      .start();
+
+  link = link.data(links, function(d) { return d.target.id; });
+
+  link.exit().remove();
+
+  link.enter().insert("line", ".node")
+      .attr("class", "link");
+
+  node = node.data(nodes, function(d) { return d.id; });
+
+  node.exit().remove();
+
+  var nodeEnter = node.enter().append("g")
+      .attr("class", "node")
+      .on("click", click)
+      .call(force.drag);
+
+  nodeEnter.append("circle")
+      .attr("r", function(d) { return Math.sqrt(d.size) / 10 || 4.5; });
+
+  nodeEnter.append("text")
+      .attr("font-family","Roboto Slab")
+      .attr("dy", ".42em")
+      .attr("text-anchor",function(d,i){
+      if(i>0){return "beginning"}
+      else{return "end"}  
+       })
+      .text(function(d) { return d.name; });
+
+  node.select("circle")
+      .style("fill", color);
+}
+
+function tick() {
+  link.attr("x1", function(d) { return d.source.x; })
+      .attr("y1", function(d) { return d.source.y; })
+      .attr("x2", function(d) { return d.target.x; })
+      .attr("y2", function(d) { return d.target.y; });
+
+  node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+}
+
+function color(d) {
+  return d._children ? "#3182bd" 
+      : d.children ? "#c6dbef" 
+      : "#fd8d3c"; 
+}
+
+function click(d) {
+  if (d3.event.defaultPrevented) return; // ignore drag
+  if (d.children) {
+    d._children = d.children;
+    d.children = null;
+  } else {
+    d.children = d._children;
+    d._children = null;
+  }
+  update();
+}
+
+function flatten(root) {
+  var nodes = [], i = 0;
+
+  function recurse(node) {
+    if (node.children) node.children.forEach(recurse);
+    if (!node.id) node.id = ++i;
+    nodes.push(node);
+  }
+
+  recurse(root);
+  return nodes;
+}
+
+</script>
